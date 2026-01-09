@@ -3,6 +3,7 @@ import { TMDBMovie, TMDBSeries, TMDBSeasonDetail, Movie, Series, Season, Episode
 const API_KEY = '32e5e53999e380a0291d66fb304153fe';
 const BASE_URL = 'https://api.themoviedb.org/3';
 const IMAGE_BASE = 'https://image.tmdb.org/t/p';
+const LANGUAGE = 'es-MX';
 
 export const getImageUrl = (path: string | null, size: 'w500' | 'original' = 'w500'): string => {
   if (!path) return 'https://via.placeholder.com/500x750?text=No+Image';
@@ -16,7 +17,7 @@ export const fetchMoviesByYear = async (year: number): Promise<TMDBMovie[]> => {
 
   while (page <= Math.min(totalPages, 5)) { // Limit to 5 pages per year
     const response = await fetch(
-      `${BASE_URL}/discover/movie?api_key=${API_KEY}&primary_release_year=${year}&sort_by=popularity.desc&page=${page}&language=es-ES`
+      `${BASE_URL}/discover/movie?api_key=${API_KEY}&primary_release_year=${year}&sort_by=popularity.desc&page=${page}&language=${LANGUAGE}`
     );
     const data = await response.json();
     movies.push(...data.results);
@@ -34,7 +35,7 @@ export const fetchSeriesByYear = async (year: number): Promise<TMDBSeries[]> => 
 
   while (page <= Math.min(totalPages, 5)) {
     const response = await fetch(
-      `${BASE_URL}/discover/tv?api_key=${API_KEY}&first_air_date_year=${year}&sort_by=popularity.desc&page=${page}&language=es-ES`
+      `${BASE_URL}/discover/tv?api_key=${API_KEY}&first_air_date_year=${year}&sort_by=popularity.desc&page=${page}&language=${LANGUAGE}`
     );
     const data = await response.json();
     series.push(...data.results);
@@ -47,7 +48,7 @@ export const fetchSeriesByYear = async (year: number): Promise<TMDBSeries[]> => 
 
 export const fetchSeriesDetails = async (seriesId: number): Promise<TMDBSeasonDetail[]> => {
   const response = await fetch(
-    `${BASE_URL}/tv/${seriesId}?api_key=${API_KEY}&language=es-ES`
+    `${BASE_URL}/tv/${seriesId}?api_key=${API_KEY}&language=${LANGUAGE}`
   );
   const data = await response.json();
   
@@ -56,7 +57,7 @@ export const fetchSeriesDetails = async (seriesId: number): Promise<TMDBSeasonDe
   for (let i = 1; i <= data.number_of_seasons; i++) {
     try {
       const seasonResponse = await fetch(
-        `${BASE_URL}/tv/${seriesId}/season/${i}?api_key=${API_KEY}&language=es-ES`
+        `${BASE_URL}/tv/${seriesId}/season/${i}?api_key=${API_KEY}&language=${LANGUAGE}`
       );
       const seasonData = await seasonResponse.json();
       
