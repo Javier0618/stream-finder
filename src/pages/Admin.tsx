@@ -6,6 +6,7 @@ import Header from '@/components/Header';
 import TMDBImporter from '@/components/TMDBImporter';
 import CSVUploader from '@/components/CSVUploader';
 import ContentStats from '@/components/ContentStats';
+import ContentList from '@/components/ContentList';
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -141,9 +142,14 @@ const Admin = () => {
         </div>
 
         {/* Main Grid */}
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-6 mb-8">
           <TMDBImporter />
           <CSVUploader onImportComplete={refreshStats} />
+        </div>
+
+        {/* Content List */}
+        <div className="mb-8">
+          <ContentList key={statsKey} onUpdate={refreshStats} />
         </div>
 
         {/* Instructions */}
